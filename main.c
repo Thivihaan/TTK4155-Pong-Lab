@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 #include "uart_driver.h"
-#include "external_memory_driver.h"
 
 #define WAVE_PIN PB1
 #define ERROR_LED PB0
@@ -28,20 +27,13 @@ int main(void) {
     uart_init();
     stdout = stdin = &uartstdout; // Replace the defualt stdout/in stream with the custom uart one
 
-    external_memory_init();
-    
     while(1) { 
-        int address = 4096;
-        while(address < 4351) {
-            unsigned char *p = (unsigned char *) address;
-            *p = 0xaa;
-            ++address;
-            _delay_ms(80);
-        }
         
 
-        //char c = getchar(); // Waits until it gets a character on the stdin stream
-        //printf("Hello, PC! You've sent me this: %c\n", c); 
+        //char c[32] = getchar(); // Waits until it gets a character on the stdin stream
+        char c[32];
+        fgets(c, sizeof(c), stdin);
+        printf("Hello, PC! You've sent me this: %s\n", c); 
     }
     
     return 0;
