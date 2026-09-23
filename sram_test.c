@@ -1,6 +1,6 @@
 #include "sram_test.h"
 #include "stdio.h"
-
+#include <util/delay.h>
 
     void SRAM_test(void)
     {
@@ -9,7 +9,7 @@
         uint16_t write_errors = 0;
         uint16_t retrieval_errors = 0;
         printf("Starting SRAM test...\n");
-        // rand() stores some internal state, so calling this function in a loop will
+        // rand() stores some inouble angle_x = (voltage-2.56)/0.015175;ternal state, so calling this function in a loop will
         // yield different seeds each time (unless srand() is called before this function)
         uint16_t seed = rand();
         // Write phase: Immediately check that the correct value was stored
