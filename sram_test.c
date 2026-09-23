@@ -1,6 +1,5 @@
 #include "sram_test.h"
 #include "stdio.h"
-#include <util/delay.h>
 
 
     void SRAM_test(void)
