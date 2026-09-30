@@ -8,6 +8,7 @@
 #include "external_memory_driver.h"
 #include "sram_test.h"
 #include "adc_driver.h"
+#include "spi_driver.h"
 
 #define WAVE_PIN PB1
 #define ERROR_LED PB0
@@ -81,8 +82,8 @@ int main(void) {
         printf("y: %i\n", pos_y);
         printf( " direction : %d\n", joystick);
 
-        printf("x slider: %i\n", pos_slider_x);
-        printf("y slider: %i\n", pos_slider_y);
+        //printf("x slider: %i\n", pos_slider_x);
+        //printf("y slider: %i\n", pos_slider_y);
 
         _delay_ms(1000);
     }

@@ -1,0 +1,48 @@
+#include "spi_driver.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+// SPI_init from lecture 7 
+void SPI_init(void){
+    // Set MOSI, SCK, and SS as outputs. MISO remains input.
+    DDRB |= (1 << SPI_MOSI) | (1 << SPI_SCK) | (1 << SPI_SS1) | (1 << SPI_SS2);
+    // Set SS1 high (no slave select) initially
+    PORTB |= (1 << SPI_SS1);
+    // Set SS2 high (no slave select) initially
+    PORTB |= (1 << SPI_SS2);
+    // SPE=1 (Enable), MSTR=1 (Master), SPR1:0=00 (F_CPU/4)
+    // CPOL=0, CPHA=0 (Mode 0)
+    SPCR = (1 << SPE) | (1 << MSTR);
+    // SPSR: Ensure no double speed
+    SPSR &= ~(1 << SPI2X);
+}
+
+// SPI_Transfer from lecture 7 
+uint8_t SPI_Transfer(uint8_t byte){
+    // NB: Chip must be selected prior to call
+    SPDR = byte;
+    while (!(SPSR & (1 << SPIF))); // Wait for transmission complete
+    return SPDR;
+}
+
+uint8_t read_byte(uint8_t pin){
+    select_slave(pin);
+    uint8_t data = SPI_Transfer(0x00);
+    unselect_slave(pin);
+    return data; 
+}
+
+void write_byte(uint8_t byte, uint8_t pin){
+    select_slave(pin);
+    SPI_Transfer(byte);
+    unselect_slave(pin);
+}
+
+
+void select_slave(uint8_t pin){ 
+    PORTB &= ~(1 << pin);
+}
+
+void unselect_slave(uint8_t pin){
+    PORTB |= (1 << pin);
+}

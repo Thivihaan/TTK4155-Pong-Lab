@@ -1,6 +1,7 @@
 #include "adc_driver.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 
 volatile uint8_t *address_ADC = (volatile uint8_t *)0x1000;
@@ -54,9 +55,15 @@ int master_conversion_x (uint8_t digital_signal){
     int angle_x = (angle_conversion(voltage_x)-48);
     if(angle_x > 0) {
         angle_x = angle_x*100/113;
+        if(angle_x>100){
+            angle_x=100;
+        }
     }
     if(angle_x <= 0) {
-        angle_x = angle_x*100/126;
+        angle_x = angle_x*100/130;
+        if(angle_x<-100){
+            angle_x=-100;
+        }
     }
 
 
@@ -70,16 +77,23 @@ int master_conversion_y (uint8_t digital_signal){
     int angle_y = angle_conversion(voltage_y) - 46;
     if(angle_y > 0) {
         angle_y = angle_y*100/115;
+        if(angle_y>100){
+            angle_y=100;
+        }
     }
     if(angle_y <= 0) {
-        angle_y = angle_y*100/121;
+        angle_y = angle_y*100/122;
+        if(angle_y<-100){
+            angle_y=-100;
+        }
     }
 
     return angle_y;
 }
 
 direction joystick_position(int posx, int posy){
-    if((posx == 0) && (posy == 0)){
+    float r = sqrt(posx * posx + posy * posy);
+    if((r < 5)){
         return NEUTRAL;
     }
     if((posy >= abs(posx)) && (posy >= 0)){
