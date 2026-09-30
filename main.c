@@ -63,6 +63,7 @@ int main(void) {
 
     init_adc();
     while(1){
+        printf("hello world");
         address_ADC[0]=1;
         _delay_us(15);
         read_ADC(0);

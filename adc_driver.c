@@ -37,25 +37,25 @@ double voltage_conversion (uint8_t digital_signal){
 }
 
 //Converts voltage to angle x in percentage
-int angle_conversion_x (double voltage){
+int angle_conversion (double voltage){
 
-    double angle_x = (voltage-2.56)/0.015175;
+    double angle_x = (voltage-2.5)/0.015;
     int angle_x_int = (int)angle_x;
     return angle_x_int;
-}
-
-//Converts voltage to angle y in percentage
-double angle_conversion_y (double voltage){
-
-    double angle_y = (voltage-2.5)/ 0.01495;
-    return angle_y;
 }
 
 
 int master_conversion_x (uint8_t digital_signal){
 
     double voltage_x = voltage_conversion(digital_signal);
-    int angle_x = (angle_conversion_x(voltage_x)-43);
+    int angle_x = (angle_conversion(voltage_x)-48);
+    if(angle_x > 0) {
+        angle_x = angle_x*100/100;
+    }
+    if(angle_x <= 0) {
+        angle_x = angle_x*100/100;
+    }
+
 
     return angle_x;
 }
@@ -64,7 +64,7 @@ int master_conversion_x (uint8_t digital_signal){
 int master_conversion_y (uint8_t digital_signal){
 
     double voltage_y = voltage_conversion(digital_signal);
-    int angle_y = angle_conversion_y(voltage_y);
+    int angle_y = angle_conversion(voltage_y);
 
     return angle_y;
 }

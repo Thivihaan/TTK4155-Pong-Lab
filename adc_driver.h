@@ -12,7 +12,7 @@ uint8_t read_ADC();
 
 double voltage_conversion (uint8_t digital_signal);
 
-int angle_conversion_x (double voltage);
+int angle_conversion (double voltage);
 
 double angle_conversion_y (double voltage);
 
