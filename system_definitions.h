@@ -13,3 +13,5 @@ this way we just need to include this file.
 #define set_bit(reg, bit) (reg |= (1 << bit))
 #define clear_bit(reg, bit) (reg &= ~(1 << bit ))
 #define test_bit(reg, bit) (reg & (1 << bit))
+
+

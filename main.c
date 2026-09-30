@@ -63,16 +63,26 @@ int main(void) {
 
     init_adc();
     while(1){
-        printf("hello world");
         address_ADC[0]=1;
         _delay_us(15);
-        read_ADC(0);
-        read_ADC(1);
-        read_ADC(2);
-        uint8_t digital_signal = read_ADC(3);
-        int angle_x = master_conversion_x(digital_signal);
+        uint8_t digital_signal_slider_x =read_ADC(0);
+        uint8_t digital_signal_slider_y =read_ADC(1);
+        uint8_t digital_signal_y =read_ADC(2);
+        uint8_t digital_signal_x = read_ADC(3);
 
-        printf("Angle x: %i\n", angle_x);
+        int pos_x = master_conversion_x(digital_signal_x);
+        int pos_y = master_conversion_y(digital_signal_y);
+        int pos_slider_x = voltage_conversion_slider(digital_signal_slider_x);
+        int pos_slider_y  = voltage_conversion_slider(digital_signal_slider_y);
+
+        direction joystick = joystick_position(pos_x, pos_y);
+
+        printf("x: %i\n", pos_x);
+        printf("y: %i\n", pos_y);
+        printf( " direction : %d\n", joystick);
+
+        printf("x slider: %i\n", pos_slider_x);
+        printf("y slider: %i\n", pos_slider_y);
 
         _delay_ms(1000);
     }

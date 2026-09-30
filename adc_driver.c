@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 volatile uint8_t *address_ADC = (volatile uint8_t *)0x1000;
+
+
 
 
 //Initializig ADC
@@ -50,10 +53,10 @@ int master_conversion_x (uint8_t digital_signal){
     double voltage_x = voltage_conversion(digital_signal);
     int angle_x = (angle_conversion(voltage_x)-48);
     if(angle_x > 0) {
-        angle_x = angle_x*100/100;
+        angle_x = angle_x*100/113;
     }
     if(angle_x <= 0) {
-        angle_x = angle_x*100/100;
+        angle_x = angle_x*100/126;
     }
 
 
@@ -64,7 +67,40 @@ int master_conversion_x (uint8_t digital_signal){
 int master_conversion_y (uint8_t digital_signal){
 
     double voltage_y = voltage_conversion(digital_signal);
-    int angle_y = angle_conversion(voltage_y);
+    int angle_y = angle_conversion(voltage_y) - 46;
+    if(angle_y > 0) {
+        angle_y = angle_y*100/115;
+    }
+    if(angle_y <= 0) {
+        angle_y = angle_y*100/121;
+    }
 
     return angle_y;
+}
+
+direction joystick_position(int posx, int posy){
+    if((posx == 0) && (posy == 0)){
+        return NEUTRAL;
+    }
+    if((posy >= abs(posx)) && (posy >= 0)){
+        return UP;
+    }
+    if((abs(posy) >= abs(posx)) && (posy < 0)){
+        return DOWN;
+    }
+    if((abs(posx) > abs(posy)) && (posx < 0)){
+        return LEFT;
+    }
+    if((posx > abs(posy)) && (posx >= 0)){
+        return RIGHT;
+    }
+}
+
+int voltage_conversion_slider (uint8_t digital_signal){
+
+    double pos = ((double)digital_signal/256)*100; 
+    int pos_int = (int)pos;
+
+    return pos_int;
+
 }
