@@ -89,9 +89,11 @@ int main(void) {
 
         _delay_ms(1000);
     }*/ 
-
+    SPI_init();
     oled_init();
 
+
+    //day 4 test 
     while(1){
         oled_go_to_line(1);
         oled_go_to_column(1);

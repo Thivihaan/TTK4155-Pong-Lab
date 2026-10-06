@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <avr/io.h>
+#include <avr/pgmspace.h>
 
 
 #include "fonts.h"
