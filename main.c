@@ -9,6 +9,7 @@
 #include "sram_test.h"
 #include "adc_driver.h"
 #include "spi_driver.h"
+#include "oled_driver.h"
 
 #define WAVE_PIN PB1
 #define ERROR_LED PB0
@@ -63,7 +64,8 @@ int main(void) {
     }*/
 
     init_adc();
-    while(1){
+    //Day 3 test 
+    /*while(1){
         address_ADC[0]=1;
         _delay_us(15);
         uint8_t digital_signal_slider_x =read_ADC(0);
@@ -86,7 +88,17 @@ int main(void) {
         //printf("y slider: %i\n", pos_slider_y);
 
         _delay_ms(1000);
+    }*/ 
+
+    oled_init();
+
+    while(1){
+        oled_go_to_line(1);
+        oled_go_to_column(1);
+        oled_write_char('A');
     }
+
+
 
     return 0;
 }
