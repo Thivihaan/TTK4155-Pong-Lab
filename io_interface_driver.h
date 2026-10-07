@@ -61,8 +61,6 @@ typedef struct {
 } Joystick;
 
 
-uint8_t io_write(uint8_t command);
-
 Buttons io_read_buttons(void);
 
 Joystick io_read_joystick(void) ; 
@@ -70,6 +68,10 @@ Joystick io_read_joystick(void) ;
 TouchPad io_read_touchpad(void); 
 
 TouchSlider io_read_slider(void); 
+
+void io_set_led(uint8_t led_n, uint8_t state);
+
+void io_set_led_pwm(uint8_t led_n, uint8_t width);
 
 
 #endif

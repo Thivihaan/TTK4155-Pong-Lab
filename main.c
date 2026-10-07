@@ -10,6 +10,8 @@
 #include "adc_driver.h"
 #include "spi_driver.h"
 #include "oled_driver.h"
+#include "io_interface_driver.h"
+#include "menu.h"
 
 #define WAVE_PIN PB1
 #define ERROR_LED PB0
@@ -92,16 +94,28 @@ int main(void) {
     SPI_init();
     oled_init();
 
+    /*io_set_led(0, 1);
+    io_set_led(1, 1);
+    io_set_led(2, 1);
+    io_set_led(3, 1);
+    io_set_led(4, 1);
+    io_set_led(5, 1);
 
-    //day 4 test 
+    while (1)
+    {
+         Buttons btns = io_read_buttons();
+        printf("Bouton up : %d\n", btns.L2);
+        _delay_ms(500);
+    }*/
     
-    oled_go_to_line(1);
-    oled_go_to_column(1);
-    oled_printf("HELLO");
-    
-    oled_go_to_line(9);
-    oled_go_to_column(1);
-    oled_printf("HELLO");
+   
+    oled_run_simple_menu();
+    /*while (1)
+    {
+        io_update_led_from_buttons();
+        _delay_ms(150);
+    }*/
+
 
 
 
