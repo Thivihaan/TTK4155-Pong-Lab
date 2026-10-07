@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
-#define OLED_DC_PIN  PB1
+#define OLED_DC_PIN  PB2
 
 void oled_init(void); 
 
