@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
-#define SPI_SS1 PB4
+#define SPI_SLAVE_IO PB4
 #define SPI_SLAVE_OLED PB3
 #define SPI_MOSI PB5
 #define SPI_MISO PB6

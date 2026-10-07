@@ -5,9 +5,9 @@
 // SPI_init from lecture 7 
 void SPI_init(void){
     // Set MOSI, SCK, and SS as outputs. MISO remains input.
-    DDRB |= (1 << SPI_MOSI) | (1 << SPI_SCK) | (1 << SPI_SS1) | (1 << SPI_SLAVE_OLED);
+    DDRB |= (1 << SPI_MOSI) | (1 << SPI_SCK) | (1 << SPI_SLAVE_IO) | (1 << SPI_SLAVE_OLED);
     // Set SS1 high (no slave select) initially
-    PORTB |= (1 << SPI_SS1);
+    PORTB |= (1 << SPI_SLAVE_IO);
     // Set SS2 high (no slave select) initially
     PORTB |= (1 << SPI_SLAVE_OLED);
     // SPE=1 (Enable), MSTR=1 (Master), SPR1:0=00 (F_CPU/4)

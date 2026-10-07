@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
-#define OLED_DC_PIN  PB0
+#define OLED_DC_PIN  PB1
 
 void oled_init(void); 
 
@@ -17,6 +17,10 @@ void oled_go_to_line(uint8_t line);
 void oled_go_to_column(uint8_t column);
 
 void oled_write_char(char ch);
+
+void oled_clear_display(void);
+
+void oled_printf(const char* str);
 
 
 

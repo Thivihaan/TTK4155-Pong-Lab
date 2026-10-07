@@ -94,11 +94,14 @@ int main(void) {
 
 
     //day 4 test 
-    while(1){
-        oled_go_to_line(1);
-        oled_go_to_column(1);
-        oled_write_char('A');
-    }
+    
+    oled_go_to_line(1);
+    oled_go_to_column(1);
+    oled_printf("HELLO");
+    
+    oled_go_to_line(9);
+    oled_go_to_column(1);
+    oled_printf("HELLO");
 
 
 
