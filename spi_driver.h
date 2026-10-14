@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
+#define SPI_SLAVE_CAN_CONTROLLER PB0
 #define SPI_SLAVE_IO PB4
 #define SPI_SLAVE_OLED PB3
 #define SPI_MOSI PB5
