@@ -12,6 +12,9 @@
 #include "oled_driver.h"
 #include "io_interface_driver.h"
 #include "menu.h"
+#include "interrupts.h"
+#include "can_driver.h"
+#include "MCP2515_driver.h"
 
 #define WAVE_PIN PB1
 #define ERROR_LED PB0
@@ -109,15 +112,76 @@ int main(void) {
     }*/
     
    
-    oled_run_simple_menu();
+    //oled_run_simple_menu();
     /*while (1)
     {
         io_update_led_from_buttons();
         _delay_ms(150);
     }*/
+    CAN_init();
+    init_interruptions();
+
+    // 1. Écrire une valeur de test (ex: 0xAA ou 10101010) dans CNF1
+    MCP_write(REG_CNF1, 0xAA); 
+
+    // 2. Relire ce même registre
+    uint8_t test_spi = MCP_read(REG_CNF1);
+
+    // 3. Vérifier la lecture
+    if (test_spi == 0xAA) {
+        // Le SPI fonctionne ! MISO, MOSI, SCK et CS communiquent bien.
+        PORTB |= (1 << PB1); // Allumer une LED pour confirmer
+    } else {
+        // Le SPI est défaillant. La valeur lue est probablement 0x00 ou 0xFF.
+    }
+
+    DDRB |= (1 << PB1);
+    PORTB &= ~(1 << PB1);   // LED éteinte au départ
 
 
+    // 2. Préparation du message test
+    Can_message msg_tx;
+    msg_tx.id = 0x001;
+    msg_tx.length = 2;
+    msg_tx.data[0] = 0xAA; // 10101010 en binaire
+    msg_tx.data[1] = 0x55; // 01010101 en binaire
 
+    // 3. Envoi du message
+    while(1) {
+        CAN_send_message(msg_tx);
+    }
+
+    Can_message msg_rx;
+
+    _delay_ms(20);
+
+    CAN_receive_message(&msg_rx);
+
+    if (msg_rx.id == 0x001) {
+        PORTB |= (1 << PB1);
+        printf("success") ;
+    }else{
+        printf("rate") ;
+    }
+
+    // 4. Boucle principale
+    /*while(1) {
+        // On attend que l'interruption lève le drapeau
+        if (flag_can_message == 1) {
+            flag_can_message= 0; // On baisse le drapeau
+            
+            // On récupère le message
+            CAN_receive_message(&msg_rx);
+            
+            // 5. Vérification
+            if (msg_rx.id == 0x123 && msg_rx.length == 2 && msg_rx.data[0] == 0xAA) {
+                PORTB |= (1 << PB1);
+                printf("success") ;
+            }else{
+                printf("rate") ;
+            }
+        }
+    }*/
 
     return 0;
 }

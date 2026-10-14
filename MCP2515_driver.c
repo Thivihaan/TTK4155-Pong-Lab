@@ -49,7 +49,7 @@ uint8_t MCP_read_status(void){
     return status; 
 }
 
-void MCP_bit_modify(uint8_t adress, uint8_t mask uint8_t data){
+void MCP_bit_modify(uint8_t adress, uint8_t mask, uint8_t data){
     spi_select_slave(SPI_SLAVE_CAN_CONTROLLER); 
 
     SPI_Transfer(0X02);
@@ -67,7 +67,4 @@ void MCP_reset(void){
 }
 
 
-void MCP_init(void){
-    MCP_reset();
-}
 
